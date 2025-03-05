@@ -1,0 +1,18 @@
+{% extends "products/base.html" %}
+
+{% block content %}
+    <div class="grid-container">
+        {% for product in products %}
+            <a href="{% url 'product-detial' slug=product.slug %}">
+                <div class="grid-text">
+                    <div class="grid-text-body">
+                        <img src="{{product.image.url}}" alt="{{ product.name }}" width="100">
+                        <p class="grid-title">{{ product.title }}</p>
+                        <p class="grid-price">{{ product.price }}</p>
+                    </div>
+                </div>
+            </a>
+            
+        {% endfor %}
+        </div>
+{% endblock %}
