@@ -1,13 +1,24 @@
 {% extends 'products/base.html' %}
 {% load crispy_forms_tags %}
+{% load widget_tweaks %}
 {% block content %}
-    <div class="content-section">
+    <div class="form-box login">
         <form method="POST">
             {% csrf_token %}
-            <fieldset class="form-group">
-                <legend>Log In</legend>
-                {{form|crispy}}
-            </fieldset>
+
+            <!-- {{form|crispy}} -->
+             <h1>Login</h1>
+             <div class="input-box">
+                {% render_field form.username placeholder="Name" class="form-control"%}
+                <i class="bx bxs-user"></i>
+             </div>
+
+             <div class="input-box">
+                {% render_field form.password placeholder="Password" class="form-control"%}
+                <i class="bx bxs-lock-alt"></i>
+             </div>
+            
+            
             <div class="form-group">
                 <button>Log In</button>
             </div>

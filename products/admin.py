@@ -1,12 +1,16 @@
 from django.contrib import admin
-from .models import User, Product, Order
+from .models import (Product,
+                    Order, 
+                    Cart, 
+                    CartItem)
 from django.utils.html import format_html
 
 
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'email', 'location', 'gender', 'dob', 'country_of_birth')
-    search_fields = ('name', 'category', 'location')
+
+# @admin.register(User)
+# class UserAdmin(admin.ModelAdmin):
+#     list_display = ('id', 'name', 'email', 'location', 'gender', 'dob', 'country_of_birth')
+#     search_fields = ('name', 'category', 'location')
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -43,6 +47,19 @@ def get_queryset(self, request):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'product', 'timestamp')
+    list_display = ('id', 'user', 'product', 'timestamp', 'location')
     search_fields = ('user__name', 'product__name')
+
+# admin.site.register(Cart)
+@admin.register(Cart)
+class CartAdmin(admin.ModelAdmin):
+    list_display = ('user', 'is_paid')
+    search_fields = ('user__username',)
+
+# admin.site.register(CartItem)
+@admin.register(CartItem)
+class CartItemAdmin(admin.ModelAdmin):
+    list_display = ('cart', 'product')
+    search_fields = ('product__title',)
+# admin.site.register(History)
 

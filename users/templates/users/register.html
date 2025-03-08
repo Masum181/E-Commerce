@@ -1,5 +1,6 @@
 {% extends "products/base.html" %}
 {% load crispy_forms_tags %}
+{% load widget_tweaks %}
 {% block content %}
     <!-- <div class="content-section">
         <form method="POST">
@@ -25,7 +26,11 @@
             {% csrf_token %}
             <div class="input-box">
                 <fieldset>
-                    {{ form|crispy}}
+                    <!-- {{ form|crispy}} -->
+                    {% render_field form.username placeholder="Name" class="form-control" %}
+                    {% render_field form.email placeholder='Email' class="form-control" %}
+                    {% render_field form.password1 placeholder="Password" class="form-control" %}
+                    {% render_field form.password2 placeholder="Confirm Password" class="form-control" %}
                 </fieldset>
                 
             </div>

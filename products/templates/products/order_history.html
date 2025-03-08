@@ -1,0 +1,18 @@
+{% extends 'products/base.html' %}
+
+{% block content %}
+    <h2>Your Order History</h2>
+    <ul>
+        {% for order in orders %}
+            <li>
+                <strong>Product:</strong> {{ order.product.name }} <br>
+                <strong>Location:</strong> {{ order.location }} <br>
+                <strong>Delivery Time:</strong> {{ order.delivary_time }} <br>
+                <strong>Timestamp:</strong> {{ order.timestamp }} <br>
+            </li>
+        {% empty %}
+            <p>No orders found.</p>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
