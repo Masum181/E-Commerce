@@ -15,7 +15,7 @@ class Product(models.Model):
     brand = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='products/', blank=True, null=True)
-    slug = models.SlugField(unique=True, blank=True, null=True) # for url friendly names
+    slug = models.SlugField(max_length=100,unique=True, blank=True, null=True) # for url friendly names
 
     def save(self, *args, **kwargs):
         if not self.slug or self.slug.strip() == '':

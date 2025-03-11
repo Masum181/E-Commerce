@@ -2,7 +2,7 @@ from django import forms
 from django.db import models
 from django.contrib.auth.models import User
 from .models import Order, Product, CartItem, Cart
-
+from django.core.validators import FileExtensionValidator
 
 # class OrderForm(forms.Form):
 #     location = forms.CharField(max_length=50, required=True, label='Delivary Location')
@@ -61,3 +61,50 @@ class OrderForm(forms.Form):
                 self.fields['cart_products'].label_from_instance = lambda obj: f"{obj.product.title})"
             except Cart.DoesNotExist:
                 print("No unpaid cart found for user.")  # Debugging output
+
+
+
+
+
+
+
+# class ProductCSVUploadForm(forms.Form):
+#     csv_file = forms.FileField(label="Upload CSV File")
+    
+#     # ✅ FIX: Allow multiple files using FileField + clean method
+#     image_files = forms.FileField(
+#         label="Upload Images", 
+#         required=False,
+#         widget=forms.FileInput(attrs={"multiple": True})  # ✅ FIX: Use `FileInput`
+#     )
+
+#     def clean_image_files(self):
+#         """ ✅ Validate multiple images and return them as a list """
+#         images = self.files.getlist("image_files")  # ✅ Retrieve multiple files
+#         if not images:
+#             return []
+#         return images  # ✅ Return the list of images
+
+
+
+class MultipleFileInput(forms.ClearableFileInput):
+    allow_multiple_selected = True
+
+class MultipleFileField(forms.FileField):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('widget', MultipleFileInput())
+        super().__init__(*args, **kwargs)
+    
+    def clean(self, data, initial=None):
+        single_file_clean = super().clean
+        if isinstance(data, (list, tuple)):
+            result = [single_file_clean(d, initial) for d in data]
+        else:
+            result = [single_file_clean(data, initial)]
+        return result
+    
+class FileFieldForm(forms.Form):
+    file_field =  MultipleFileField()
+    csv_file = forms.FileField(label='Upload CSV File',
+                               validators=[FileExtensionValidator(allowed_extensions=['csv'])])
+    

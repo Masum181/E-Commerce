@@ -6,7 +6,8 @@ from .views import (
     cart,
     remove_cart,
     order_now, 
-    order_history
+    order_history,
+    FileFieldFormView
 )
 
 
@@ -17,6 +18,7 @@ urlpatterns=[
     path('cart-items/', cart, name='cart-items'),
     path('remove-cart/<id>/', remove_cart, name='remove-cart'),
     path('order-now/', order_now, name='order'),
-    path('order_history/', order_history, name='order_history')
+    path('order_history/', order_history, name='order_history'),
+    path('multiple_upload/', FileFieldFormView.as_view(), name='multifile'),
     
 ]
